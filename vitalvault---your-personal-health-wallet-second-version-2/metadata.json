@@ -1,0 +1,7 @@
+{
+  "name": "VitalVault - Your Personal Health Wallet second version",
+  "description": "A secure health wallet to store medical reports, track vitals over time with visual analytics, and securely share data with family and doctors.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
