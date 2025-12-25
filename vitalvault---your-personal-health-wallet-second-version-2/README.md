@@ -1,60 +1,113 @@
-
-# VitalVault - Your Secure Health Wallet
-
-VitalVault is a high-performance personal health record (PHR) management system. It allows users to track vitals, upload medical reports, and securely share data with healthcare providers.
-
-## 🛠️ Tech Stack
-
-- **Frontend:** ReactJS (v19) with Tailwind CSS for high-fidelity UI/UX.
-- **Visuals:** Recharts for interactive vitals trend analysis.
-- **AI Engine:** Google Gemini API (gemini-3-flash) for automated report parsing and data extraction.
-- **Backend & Storage:** Node.js logic implemented via a Service Pattern.
-- **Database:** SQLite simulation via `localStorage` for rapid prototyping and offline-first capabilities.
-
-## 🚀 Setup Instructions
-
-Follow these steps to run the application on your local machine:
-
-1. **Prerequisites**: Ensure you have [Node.js](https://nodejs.org/) installed (v18 or higher recommended).
-2. **Create Project Folder**:
-   ```bash
-   mkdir vital-vault && cd vital-vault
-   ```
-3. **Copy Files**: Place all the project files (`index.html`, `App.tsx`, `index.tsx`, `package.json`, etc.) into this folder.
-4. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-5. **Set API Key**:
-   The application requires a Google Gemini API Key for the medical report parsing feature.
-   ```bash
-   # On macOS/Linux
-   export API_KEY='your_api_key_here'
-   # On Windows (PowerShell)
-   $env:API_KEY='your_api_key_here'
-   ```
-6. **Start Development Server**:
-   ```bash
-   npm run dev
-   ```
-7. **Access the App**: Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## 📁 System Architecture
-
-### Frontend (ReactJS)
-- **UI Components**: Modular design using Tailwind CSS.
-- **State Management**: Centralized React State for user session and health data.
-- **API Integration**: Native Fetch and `@google/genai` SDK.
-
-### Data Model (SQLite/Mock)
-- **Users**: Owner (John Doe), Viewer (Dr. Smith, Jane Doe).
-- **Reports**: Stores document metadata and Gemini-extracted insights.
-- **Vitals**: Time-series data points for BP, Sugar, Heart Rate.
-
-## 🔐 Security & Privacy
-- **RBAC**: Strict separation between Owners and Viewers.
-- **Data Protection**: All medical reports are processed using secure AI models.
-- **Granular Sharing**: Owners must explicitly grant access to individual reports.
-
----
-*Note: This prototype uses localStorage to simulate the SQLite database for zero-config demonstration. In production, the DB service would interface with a real SQLite/Node.js backend.*
+  VitalVault 2.0 – Personal Health Wallet
+VitalVault 2.0 is a full-stack personal health wallet that allows users to securely store medical reports, extract vitals using AI, visualize health trends, and share reports with trusted viewers such as doctors or family members.
+The system is built with a React + Vite frontend, a Node.js backend, JWT-based authentication, and a modular service architecture.
+  Features
+Secure user authentication (Register / Login)
+JWT-based session management
+Upload medical reports (PDF / Image)
+AI-powered extraction of medical vitals
+Persistent storage of reports and vitals
+Interactive vitals charts (BP, Sugar, Heart Rate)
+Report sharing with viewer accounts
+Clean dashboard and modular UI
+Fully local development setup
+  Tech Stack
+Frontend
+React (TypeScript)
+Vite
+Tailwind CSS
+Recharts (for vitals visualization)
+Backend
+Node.js
+Express.js
+SQLite
+JWT Authentication
+Multer (file uploads)
+AI
+Google Gemini API (medical report parsing)
+  Project Structure
+vitalvault---your-personal-health-wallet-second-version-2/
+│
+├── backend/
+│   ├── middleware/
+│   │   └── auth.js
+│   ├── routes/
+│   │   ├── auth.routes.js
+│   │   ├── reports.routes.js
+│   │   └── vitals.routes.js
+│   ├── uploads/
+│   │   └── reports/
+│   ├── db.js
+│   ├── initDb.js
+│   ├── server.js
+│   ├── healthwallet.db
+│   └── package.json
+│
+├── components/
+│   ├── ArchitectureView.tsx
+│   ├── Layout.tsx
+│   ├── Login.tsx
+│   ├── ReportsList.tsx
+│   ├── UploadReport.tsx
+│   ├── VitalsCharts.tsx
+│   └── VitalsDashboard.tsx
+│
+├── services/
+│   ├── api.ts          # frontend API facade
+│   ├── httpApi.ts      # real HTTP backend calls
+│   ├── database.ts
+│   ├── geminiService.ts
+│   ├── reports.ts
+│   └── vitals.ts
+│
+├── App.tsx
+├── index.tsx
+├── index.html
+├── types.ts
+├── vite.config.ts
+├── package.json
+└── README.md
+  Environment Setup
+1️ Backend Environment
+Navigate to backend:
+cd backend
+Install dependencies:
+npm install
+Initialize database (first time only):
+node initDb.js
+Start backend server:
+node server.js
+Backend runs on:
+http://localhost:5001
+2️  Frontend Environment
+From project root:
+npm install
+npm run dev
+Frontend runs on:
+http://localhost:5173
+  Authentication Flow
+User registers or logs in
+Backend returns a JWT token
+Token is stored in sessionStorage
+Token is sent with every protected API request
+Backend middleware validates the token
+  AI Report Processing
+Users upload a medical report (image or PDF)
+File is converted to base64
+Sent to Gemini AI
+AI extracts:
+Title
+Category
+Date
+Vitals (BP, Sugar, Heart Rate, etc.)
+Extracted vitals are stored and visualized
+  Vitals Visualization
+Vitals are displayed using interactive charts:
+Blood Pressure trends
+Blood Sugar levels
+Heart Rate stability
+Charts update automatically after new uploads.
+  Report Sharing
+Owner can share reports with viewer users
+Viewers can see shared reports but cannot modify them
+Access control enforced at backend level
